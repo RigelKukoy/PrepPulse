@@ -1,0 +1,80 @@
+@import url("https://fonts.googleapis.com/css2?family=Lexend:wght@400;600&display=swap");
+
+@import "./global.css";
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+@layer base {
+  :root {
+    --sidebar-background: 0 0% 98%;
+    --sidebar-foreground: 240 5.3% 26.1%;
+    --sidebar-primary: 240 5.9% 10%;
+    --sidebar-primary-foreground: 0 0% 98%;
+    --sidebar-accent: 240 4.8% 95.9%;
+    --sidebar-accent-foreground: 240 5.9% 10%;
+    --sidebar-border: 220 13% 91%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+  .dark {
+    --sidebar-background: 240 5.9% 10%;
+    --sidebar-foreground: 240 4.8% 95.9%;
+    --sidebar-primary: 224.3 76.3% 48%;
+    --sidebar-primary-foreground: 0 0% 100%;
+    --sidebar-accent: 240 3.7% 15.9%;
+    --sidebar-accent-foreground: 240 4.8% 95.9%;
+    --sidebar-border: 240 3.7% 15.9%;
+    --sidebar-ring: 217.2 91.2% 59.8%;
+  }
+}
+@layer base {
+  * {
+    @apply border-border;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+
+@layer base {
+  * {
+    @apply border-border outline-ring/50;
+  }
+  body {
+    @apply bg-background text-foreground;
+  }
+}
+:root {
+  --background: 0 0% 100%; /* Example: white */
+  --foreground: 222.2 84% 4.9%; /* Example: black */
+  --card: 0 0% 100%; /* Example: white */
+  --card-foreground: 222.2 84% 4.9%; /* Example: black */
+  --popover: 0 0% 100%; /* Example: white */
+  --popover-foreground: 222.2 84% 4.9%; /* Example: black */
+  --primary: 222.2 47.4% 11.2%; /* Example: dark gray */
+  --primary-foreground: 210 40% 98%; /* Example: light gray */
+  --secondary: 210 40% 96.1%; /* Example: light gray */
+  --secondary-foreground: 222.2 47.4% 11.2%; /* Example: dark gray */
+  --muted: 210 40% 96.1%; /* Example: light gray */
+  --muted-foreground: 215.4 16.3% 46.9%; /* Example: gray */
+  --accent: 210 40% 96.1%; /* Example: light gray */
+  --accent-foreground: 222.2 47.4% 11.2%; /* Example: dark gray */
+  --destructive: 0 84.2% 60.2%; /* Example: red */
+  --destructive-foreground: 210 40% 98%; /* Example: light gray */
+  --border: 214.3 31.8% 91.4%; /* Example: light gray */
+  --input: 214.3 31.8% 91.4%; /* Example: light gray */
+  --ring: 222.2 84% 4.9%; /* Example: black */
+  --chart-1: 0 84.2% 60.2%; /* Example: red */
+  --chart-2: 215 20.2% 65.1%; /* Example: blue */
+  --chart-3: 47.9 95.8% 53.1%; /* Example: yellow */
+  --chart-4: 142.1 76.2% 36.3%; /* Example: green */
+  --chart-5: 346.8 77.2% 49.8%; /* Example: pink */
+  --sidebar-background: 210 40% 96.1%; /* Example: light gray */
+  --sidebar-foreground: 222.2 47.4% 11.2%; /* Example: dark gray */
+  --sidebar-primary: 222.2 47.4% 11.2%; /* Example: dark gray */
+  --sidebar-primary-foreground: 210 40% 98%; /* Example: light gray */
+  --sidebar-accent: 210 40% 96.1%; /* Example: light gray */
+  --sidebar-accent-foreground: 222.2 47.4% 11.2%; /* Example: dark gray */
+  --sidebar-border: 214.3 31.8% 91.4%; /* Example: light gray */
+  --sidebar-ring: 222.2 84% 4.9%; /* Example: black */
+}
