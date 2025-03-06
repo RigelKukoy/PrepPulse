@@ -10,6 +10,7 @@ function SchedulePage({
   clickedSched,
   scheduleDatabase,
   scheduleTasks,
+  scheduleReferences,
 }) {
   function handleChevronClick() {
     setOnSchedulePage(null);
@@ -55,7 +56,10 @@ function SchedulePage({
             />
           </TabsContent>
           <TabsContent value="references">
-            <References />
+            <References
+              scheduleReferences={scheduleReferences}
+              schedID={clickedSched.schedID}
+            />
           </TabsContent>
         </Tabs>
       </div>

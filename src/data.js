@@ -130,13 +130,13 @@ export const tasks = [
 export const references = [
   {
     id: 1,
-    schedId: 1, // Reference to the schedule
+    schedID: 1, // Reference to the schedule
     title: "Math Textbook",
     link: "https://example.com/math-textbook",
   },
   {
     id: 2,
-    schedId: 1, // Reference to the schedule
+    schedID: 1, // Reference to the schedule
     title: "Lecture Notes",
     link: "https://example.com/lecture-notes",
   },
