@@ -2,10 +2,12 @@ import ScheduleGrid from "./ScheduleGrid";
 import { useState, useEffect } from "react";
 import SchedulePage from "./SchedulePage";
 import { schedule } from "@/data";
+import { tasks } from "@/data";
 
 function Dashboard() {
   const [onSchedulePage, setOnSchedulePage] = useState(null);
   const [Schedule, setSchedule] = useState(schedule);
+  const [scheduleTasks, setScheduleTasks] = useState(tasks);
 
   useEffect(() => {
     console.log("onSchedulePage changed:", onSchedulePage);
@@ -19,6 +21,7 @@ function Dashboard() {
             setOnSchedulePage={setOnSchedulePage}
             clickedSched={onSchedulePage}
             scheduleDatabase={Schedule}
+            scheduleTasks={scheduleTasks}
           />
         ) : (
           <ScheduleGrid

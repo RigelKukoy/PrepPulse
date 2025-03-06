@@ -114,13 +114,13 @@ export const schedule = [
 export const tasks = [
   {
     id: 1,
-    schedId: 1, // Reference to the schedule
+    schedID: 1, // Reference to the schedule
     taskDescription: "Review Chapter 1",
     isChecked: false,
   },
   {
     id: 2,
-    schedId: 1, // Reference to the schedule
+    schedID: 1, // Reference to the schedule
     taskDescription: "Solve practice problems",
     isChecked: true,
   },

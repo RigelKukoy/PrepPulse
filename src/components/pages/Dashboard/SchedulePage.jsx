@@ -5,7 +5,12 @@ import References from "./SchedulePage-components/References";
 import SchedCountdown from "./SchedulePage-components/SchedCountdown";
 
 // eslint-disable-next-line react/prop-types
-function SchedulePage({ setOnSchedulePage, clickedSched, scheduleDatabase }) {
+function SchedulePage({
+  setOnSchedulePage,
+  clickedSched,
+  scheduleDatabase,
+  scheduleTasks,
+}) {
   function handleChevronClick() {
     setOnSchedulePage(null);
   }
@@ -13,7 +18,7 @@ function SchedulePage({ setOnSchedulePage, clickedSched, scheduleDatabase }) {
   const scheduleToDisplay = scheduleDatabase.filter(
     (sched) => sched.id === clickedSched.schedID
   );
-  console.log("Schedule:", scheduleToDisplay);
+
   return (
     <div className="flex h-full flex-col">
       <div className="flex h-1/2 flex-col">
@@ -32,7 +37,7 @@ function SchedulePage({ setOnSchedulePage, clickedSched, scheduleDatabase }) {
               <div className="flex h-[6vh] font-bold items-center text-3xl">
                 {sched.title}
               </div>
-              <div className="flex flex-1 font-light text-lg">
+              <div className="flex flex-1 font-light text-lg text-slate-500">
                 {sched.description}
               </div>
             </div>
@@ -44,7 +49,10 @@ function SchedulePage({ setOnSchedulePage, clickedSched, scheduleDatabase }) {
             <TabsTrigger value="references">References</TabsTrigger>
           </TabsList>
           <TabsContent value="tasks" className="flex-1">
-            <TaskToAccomplish />
+            <TaskToAccomplish
+              scheduleTasks={scheduleTasks}
+              schedID={clickedSched.schedID}
+            />
           </TabsContent>
           <TabsContent value="references">
             <References />
