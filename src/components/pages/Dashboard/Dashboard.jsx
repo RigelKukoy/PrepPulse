@@ -23,6 +23,7 @@ function Dashboard() {
             scheduleDatabase={Schedule}
             scheduleTasks={scheduleTasks}
             scheduleReferences={scheduleReferences}
+            setScheduleTasks={setScheduleTasks}
           />
         ) : (
           <ScheduleGrid

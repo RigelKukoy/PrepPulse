@@ -8,7 +8,7 @@ import {
 import TaskComponent from "./TaskComponent";
 import AddTask from "./AddTask";
 
-function TaskToAccomplish({ scheduleTasks, schedID }) {
+function TaskToAccomplish({ scheduleTasks, schedID, setScheduleTasks }) {
   const taskToDisplay = scheduleTasks.filter(
     (tasks) => tasks.schedID === schedID
   );
@@ -25,7 +25,7 @@ function TaskToAccomplish({ scheduleTasks, schedID }) {
             <TaskComponent key={tasks.id} tasks={tasks} />
           ))}
         </div>
-        <AddTask />
+        <AddTask setScheduleTasks={setScheduleTasks} schedID={schedID} />
       </CardContent>
     </Card>
   );
