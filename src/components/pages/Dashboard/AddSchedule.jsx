@@ -10,16 +10,17 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "./AddSchedule-components/DateTimepicker";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "sonner";
 import { useEffect } from "react";
+import { DashboardContext } from "./DashboardContext";
 import ChooseColor from "./AddSchedule-components/ChooseColor";
 
-function AddSchedule({ Schedule, onChange }) {
+function AddSchedule() {
   const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [open, setOpen] = useState(false);
-
+  const { Schedule, setSchedule } = useContext(DashboardContext);
   let generatedID = 1;
 
   useEffect(() => {
@@ -27,7 +28,7 @@ function AddSchedule({ Schedule, onChange }) {
   }, [Schedule]);
 
   function deleteSchedule(ScheduleID) {
-    onChange((prevState) =>
+    setSchedule((prevState) =>
       prevState.filter((sched) => sched.id !== ScheduleID)
     );
   }
@@ -86,7 +87,7 @@ function AddSchedule({ Schedule, onChange }) {
       sched: selectedSchedule,
     };
 
-    onChange((prevSched) => [...prevSched, newSched]);
+    setSchedule((prevSched) => [...prevSched, newSched]);
     setOpen(false);
   }
 

@@ -3,23 +3,20 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import TaskToAccomplish from "./SchedulePage-components/TaskToAccomplish";
 import References from "./SchedulePage-components/References";
 import SchedCountdown from "./SchedulePage-components/SchedCountdown";
+import { useContext } from "react";
+import { DashboardContext } from "./DashboardContext";
 
 // eslint-disable-next-line react/prop-types
-function SchedulePage({
-  setOnSchedulePage,
-  clickedSched,
-  scheduleDatabase,
-  scheduleTasks,
-  scheduleReferences,
-  setScheduleTasks,
-  setScheduleReferences,
-}) {
+function SchedulePage() {
+  const { Schedule, onSchedulePage, setOnSchedulePage } =
+    useContext(DashboardContext);
+
   function handleChevronClick() {
     setOnSchedulePage(null);
   }
 
-  const scheduleToDisplay = scheduleDatabase.filter(
-    (sched) => sched.id === clickedSched.schedID
+  const scheduleToDisplay = Schedule.filter(
+    (sched) => sched.id === onSchedulePage.schedID
   );
 
   return (
@@ -31,7 +28,7 @@ function SchedulePage({
         >
           <ChevronLeftIcon />
         </button>
-        <SchedCountdown scheduleTime={clickedSched.schedule} />
+        <SchedCountdown scheduleTime={onSchedulePage.schedule} />
       </div>
       <div className="bg-white shadow-lg p-2 ">
         {scheduleToDisplay.map((sched) => (
@@ -52,18 +49,10 @@ function SchedulePage({
             <TabsTrigger value="references">References</TabsTrigger>
           </TabsList>
           <TabsContent value="tasks" className="flex-1">
-            <TaskToAccomplish
-              scheduleTasks={scheduleTasks}
-              schedID={clickedSched.schedID}
-              setScheduleTasks={setScheduleTasks}
-            />
+            <TaskToAccomplish />
           </TabsContent>
           <TabsContent value="references">
-            <References
-              scheduleReferences={scheduleReferences}
-              schedID={clickedSched.schedID}
-              setScheduleReferences={setScheduleReferences}
-            />
+            <References />
           </TabsContent>
         </Tabs>
       </div>

@@ -1,10 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ReferenceComponent from "./ReferenceComponent";
 import AddReference from "./AddReference";
+import { useContext } from "react";
+import { DashboardContext } from "../DashboardContext";
 
-function References({ scheduleReferences, schedID, setScheduleReferences }) {
+function References() {
+  const { scheduleReferences, onSchedulePage } = useContext(DashboardContext);
   const ReferencesToDisplay = scheduleReferences.filter(
-    (reference) => reference.schedID === schedID
+    (reference) => reference.schedID === onSchedulePage.schedID
   );
   return (
     <Card>
@@ -16,11 +19,7 @@ function References({ scheduleReferences, schedID, setScheduleReferences }) {
           {ReferencesToDisplay.map((reference) => (
             <ReferenceComponent key={reference.id} reference={reference} />
           ))}
-          <AddReference
-            scheduleReferences={scheduleReferences}
-            schedID={schedID}
-            setScheduleReferences={setScheduleReferences}
-          />
+          <AddReference />
         </div>
       </CardContent>
     </Card>

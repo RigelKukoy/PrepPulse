@@ -7,10 +7,13 @@ import {
 } from "@/components/ui/card";
 import TaskComponent from "./TaskComponent";
 import AddTask from "./AddTask";
+import { useContext } from "react";
+import { DashboardContext } from "../DashboardContext";
 
-function TaskToAccomplish({ scheduleTasks, schedID, setScheduleTasks }) {
+function TaskToAccomplish() {
+  const { scheduleTasks, onSchedulePage } = useContext(DashboardContext);
   const taskToDisplay = scheduleTasks.filter(
-    (tasks) => tasks.schedID === schedID
+    (tasks) => tasks.schedID === onSchedulePage.schedID
   );
 
   return (
@@ -25,7 +28,7 @@ function TaskToAccomplish({ scheduleTasks, schedID, setScheduleTasks }) {
             <TaskComponent key={tasks.id} tasks={tasks} />
           ))}
         </div>
-        <AddTask setScheduleTasks={setScheduleTasks} schedID={schedID} />
+        <AddTask />
       </CardContent>
     </Card>
   );

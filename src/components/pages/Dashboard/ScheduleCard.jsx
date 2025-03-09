@@ -1,7 +1,9 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState, useContext } from "react";
 import dayjs from "dayjs";
+import { DashboardContext } from "./DashboardContext";
 
 function ScheduleCard(props) {
+  const { setOnSchedulePage } = useContext(DashboardContext);
   const [countdownDays, setCountdownDays] = useState(null);
 
   useEffect(() => {
@@ -57,7 +59,7 @@ function ScheduleCard(props) {
   }, [props.date]);
 
   function handleOnClick() {
-    props.setPage({ schedID: props.id, schedule: props.sched });
+    setOnSchedulePage({ schedID: props.id, schedule: props.sched });
   }
 
   return (

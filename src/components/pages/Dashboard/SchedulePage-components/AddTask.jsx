@@ -1,11 +1,13 @@
 import { Input } from "@/components/ui/input";
 import { PlusCircleIcon } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { useState } from "react";
+import { useContext, useState } from "react";
 import ShortUniqueId from "short-unique-id";
+import { DashboardContext } from "../DashboardContext";
 
-function AddTask({ setScheduleTasks, schedID }) {
+function AddTask() {
   const [inputValue, setInputValue] = useState("");
+  const { setScheduleTasks, onSchedulePage } = useContext(DashboardContext);
 
   const uid = new ShortUniqueId();
 
@@ -22,7 +24,7 @@ function AddTask({ setScheduleTasks, schedID }) {
 
     const newTask = {
       id: taskID,
-      schedID: schedID,
+      schedID: onSchedulePage.schedID,
       taskDescription: taskInput,
       isChecked: false,
     };

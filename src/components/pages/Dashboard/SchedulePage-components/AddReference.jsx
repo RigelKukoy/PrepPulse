@@ -1,8 +1,12 @@
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { useContext } from "react";
 import ShortUniqueId from "short-unique-id";
+import { DashboardContext } from "../DashboardContext";
 
-function AddReference({ schedID, setScheduleReferences }) {
+function AddReference() {
+  const { onSchedulePage, setScheduleReferences } =
+    useContext(DashboardContext);
   const uid = new ShortUniqueId();
 
   const generateUniqueID = () => uid.randomUUID();
@@ -19,7 +23,7 @@ function AddReference({ schedID, setScheduleReferences }) {
 
     const newReference = {
       id: referenceID,
-      schedID: schedID,
+      schedID: onSchedulePage.schedID,
       title: newReferenceTitle,
       description: newReferenceDescription,
       link: newReferenceLink,
