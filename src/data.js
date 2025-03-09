@@ -132,12 +132,16 @@ export const references = [
     id: 1,
     schedID: 1, // Reference to the schedule
     title: "Math Textbook",
+    description:
+      "A comprehensive textbook covering algebra, geometry, and calculus.",
     link: "https://example.com/math-textbook",
   },
   {
     id: 2,
     schedID: 1, // Reference to the schedule
     title: "Lecture Notes",
+    description:
+      "Handwritten notes from the latest math lecture, including key formulas.",
     link: "https://example.com/lecture-notes",
   },
 ];

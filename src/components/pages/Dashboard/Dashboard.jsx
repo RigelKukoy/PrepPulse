@@ -24,6 +24,7 @@ function Dashboard() {
             scheduleTasks={scheduleTasks}
             scheduleReferences={scheduleReferences}
             setScheduleTasks={setScheduleTasks}
+            setScheduleReferences={setScheduleReferences}
           />
         ) : (
           <ScheduleGrid

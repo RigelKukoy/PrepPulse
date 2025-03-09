@@ -1,7 +1,8 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ReferenceComponent from "./ReferenceComponent";
+import AddReference from "./AddReference";
 
-function References({ scheduleReferences, schedID }) {
+function References({ scheduleReferences, schedID, setScheduleReferences }) {
   const ReferencesToDisplay = scheduleReferences.filter(
     (reference) => reference.schedID === schedID
   );
@@ -15,6 +16,11 @@ function References({ scheduleReferences, schedID }) {
           {ReferencesToDisplay.map((reference) => (
             <ReferenceComponent key={reference.id} reference={reference} />
           ))}
+          <AddReference
+            scheduleReferences={scheduleReferences}
+            schedID={schedID}
+            setScheduleReferences={setScheduleReferences}
+          />
         </div>
       </CardContent>
     </Card>
