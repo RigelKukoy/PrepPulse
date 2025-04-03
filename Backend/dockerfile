@@ -1,0 +1,16 @@
+FROM node:18-alpine
+WORKDIR /app
+
+# Copy package files first
+COPY package*.json ./
+RUN npm ci --only=production
+
+# Copy app files (including .env for development)
+COPY . .
+
+# Production: Use --build-arg instead of copying .env
+# ARG DB_URL
+# ENV DATABASE_URL=$DB_URL
+
+EXPOSE ${PORT:-5000}
+CMD ["node", "src/server.js"]
