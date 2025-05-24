@@ -4,9 +4,9 @@ PrepPulse is a full-stack application designed to help users manage and prepare 
 
 ## Screenshots
 
-![PrepPulse Dashboard View](readme-images/dashboard-view.png)
+![PrepPulse Dashboard View](readme-images/Dashboard.png)
 
-![PrepPulse Task Details](readme-images/task-details.png)
+![PrepPulse Schedule Page](readme-images/SchedulePage.png)
 
 ## Prerequisites
 
