@@ -49,18 +49,15 @@ function SchedCountdown({ scheduleTime }) {
   }, [scheduleTime]);
 
   return (
-    <div className="flex w-full h-full justify-center items-center text-slate-900 text-2xl font-bold bg-[length:400%_400%] bg-[position:0%_0%] relative overflow-hidden">
+    <div className="flex w-full h-full justify-center items-center text-white text-2xl font-bold bg-[length:400%_400%] bg-[position:0%_0%] relative overflow-hidden rounded-b-[100px]">
       {/* Base gradient */}
-      <div className="absolute inset-0 bg-gradient-to-br from-white via-blue-200 to-white"></div>
+      <div className="absolute inset-0 bg-gradient-to-br from-blue-200 via-blue-300 to-blue-50"></div>
 
       {/* Radial gradient overlay */}
-      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/20 via-transparent to-blue-300/30"></div>
-
-      {/* Top diagonal accent */}
-      <div className="absolute inset-0 bg-gradient-to-tr from-transparent via-white/50 to-blue-500/20"></div>
+      <div className="absolute inset-0 bg-gradient-to-r from-blue-500/60 via-transparent to-blue-300/50"></div>
 
       {/* Bottom subtle glow */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-400/30"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent to-blue-400/50"></div>
 
       {/* Content container */}
       <div className="relative z-10">

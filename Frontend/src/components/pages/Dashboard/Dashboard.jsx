@@ -5,10 +5,14 @@ import SchedulePage from "./SchedulePage";
 import { DashboardContext } from "./DashboardContext";
 
 function Dashboard() {
-  const { onSchedulePage } = useContext(DashboardContext);
+  const { onSchedulePage, setCurrentPage } = useContext(DashboardContext);
   useEffect(() => {
     console.log("onSchedulePage changed:", onSchedulePage);
   }, [onSchedulePage]);
+
+  useEffect(() => {
+    setCurrentPage("dashboard");
+  }, []);
 
   return (
     <div className="w-full">

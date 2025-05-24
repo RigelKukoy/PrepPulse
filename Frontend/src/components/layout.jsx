@@ -8,7 +8,7 @@ function Layout({ children }) {
     <SidebarProvider>
       <AppSidebar />
       <main className="flex flex-1">
-        <SidebarTrigger />
+        <SidebarTrigger className="fixed" />
         {children}
         <Toaster />
       </main>

@@ -1,17 +1,13 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import ReferenceComponent from "./ReferenceComponent";
 import AddReference from "./AddReference";
-import { useContext, useState } from "react";
-import { DashboardContext } from "../DashboardContext";
+import { useState } from "react";
+
 import AddIcon from "./AddIcon";
 
-function References() {
-  const { scheduleReferences, onSchedulePage } = useContext(DashboardContext);
+function References({ referencesData }) {
   const [isAddingReferences, setIsAddingReferences] = useState(false);
 
-  const ReferencesToDisplay = scheduleReferences.filter(
-    (reference) => reference.schedID === onSchedulePage.schedID
-  );
   return (
     <Card>
       <CardHeader>
@@ -19,7 +15,7 @@ function References() {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-2">
-          {ReferencesToDisplay.map((reference) => (
+          {referencesData.map((reference) => (
             <ReferenceComponent key={reference.id} reference={reference} />
           ))}
           {isAddingReferences ? (

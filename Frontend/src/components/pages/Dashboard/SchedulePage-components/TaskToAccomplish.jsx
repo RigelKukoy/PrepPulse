@@ -7,18 +7,14 @@ import {
 } from "@/components/ui/card";
 import TaskComponent from "./TaskComponent";
 import AddTask from "./AddTask";
-import { useContext, useState } from "react";
-import { DashboardContext } from "../DashboardContext";
+import { useState } from "react";
+
 import AddIcon from "./AddIcon";
 
-function TaskToAccomplish() {
-  const { scheduleTasks, onSchedulePage } = useContext(DashboardContext);
-
+function TaskToAccomplish({ tasksData }) {
   const [isAddingTask, setIsAddingTask] = useState(false);
 
-  const taskToDisplay = scheduleTasks.filter(
-    (tasks) => tasks.schedID === onSchedulePage.schedID
-  );
+  console.log("Tasks:", tasksData);
 
   return (
     <Card className="flex flex-col ">
@@ -28,7 +24,7 @@ function TaskToAccomplish() {
       </CardHeader>
       <CardContent>
         <div className="flex flex-col gap-2">
-          {taskToDisplay.map((tasks) => (
+          {tasksData.map((tasks) => (
             <TaskComponent key={tasks.id} tasks={tasks} />
           ))}
         </div>

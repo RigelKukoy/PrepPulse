@@ -1,7 +1,17 @@
 import pool from "../config/db.js";
 
-export const getAllSchedulesService = async () => {
-  const result = await pool.query("SELECT * FROM schedules");
+export const getAllSchedulesService = async (sortBy, sortDir, deletedStatus) => {
+  const result = await pool.query(
+    `SELECT *, 
+      CASE 
+        WHEN "total_tasks" = 0 THEN 0 
+        ELSE ROUND(("progress"::decimal / "total_tasks") * 100, 2) 
+      END AS progress_percentage 
+      FROM schedules 
+      WHERE is_deleted = ${deletedStatus}
+      ORDER BY "${sortBy}" ${sortDir.toUpperCase()}
+      `
+  );
   return result.rows;
 };
 

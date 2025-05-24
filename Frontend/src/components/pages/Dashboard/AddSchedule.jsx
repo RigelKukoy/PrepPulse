@@ -10,86 +10,108 @@ import {
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
 import { DateTimePicker } from "./AddSchedule-components/DateTimepicker";
-import { useContext, useState } from "react";
+import { useState } from "react";
 import dayjs from "dayjs";
 import { toast } from "sonner";
-import { useEffect } from "react";
-import { DashboardContext } from "./DashboardContext";
-import ChooseColor from "./AddSchedule-components/ChooseColor";
+import { useForm, Controller } from "react-hook-form";
+import { z } from "zod";
+import { zodResolver } from "@hookform/resolvers/zod";
+
+const formSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  schedule_description: z.string(),
+  sched: z.date().refine((date) => date > new Date(), {
+    message: "Date must be in the future",
+  }),
+});
 
 function AddSchedule() {
-  const [selectedSchedule, setSelectedSchedule] = useState(null);
   const [open, setOpen] = useState(false);
-  const { Schedule, setSchedule } = useContext(DashboardContext);
-  let generatedID = 1;
+  const {
+    register,
+    handleSubmit,
+    control,
+    formState: { errors, isSubmitting },
+    setError,
+    reset,
+  } = useForm({
+    resolver: zodResolver(formSchema),
+    defaultValues: {
+      title: "",
+      schedule_description: "",
+      sched: null,
+    },
+  });
 
-  useEffect(() => {
-    makeNewId(Schedule);
-  }, [Schedule]);
-
-  function deleteSchedule(ScheduleID) {
-    setSchedule((prevState) =>
-      prevState.filter((sched) => sched.id !== ScheduleID)
-    );
-  }
-
-  function getScheduleDate(scheduleDateTime) {
-    const dateTimeObject = new Date(scheduleDateTime);
+  function getScheduleDate(schedObject) {
+    const dateTimeObject = new Date(schedObject);
     const scheduleDayjs = dayjs(dateTimeObject);
-
     const formattedDate = scheduleDayjs.format("MMMM D, YYYY");
-
-    console.log(formattedDate);
-
     return formattedDate;
   }
 
-  function getScheduleTime(scheduleDateTime) {
-    const dateTimeObject = new Date(scheduleDateTime);
+  function getScheduleTime(schedObject) {
+    const dateTimeObject = new Date(schedObject);
     const scheduleDayjs = dayjs(dateTimeObject);
-
     const formattedTime = scheduleDayjs.format("h:mm A");
-    console.log(formattedTime);
     return formattedTime;
   }
 
-  function makeNewId(ScheduleDB) {
-    const scheduleLength = ScheduleDB.length;
-    const lastID = ScheduleDB[scheduleLength - 1]?.id;
+  function formatFormData(data) {
+    const formattedDate = getScheduleDate(data.sched);
+    const formattedTime = getScheduleTime(data.sched);
 
-    if (scheduleLength === 0) {
-      return generatedID;
-    } else {
-      generatedID = lastID + 1;
-      return generatedID;
-    }
-  }
-
-  function handleOnSubmit(event) {
-    event.preventDefault();
-    const formEl = event.currentTarget;
-    const formData = new FormData(formEl);
-
-    const newTitle = formData.get("schedule-title");
-    const newDescription = formData.get("schedule-description");
-    console.log(formData);
-
-    const newDate = getScheduleDate(selectedSchedule);
-    const newTime = getScheduleTime(selectedSchedule);
-    const newID = makeNewId(Schedule);
-
-    const newSched = {
-      id: newID,
-      title: newTitle,
-      description: newDescription,
-      date: newDate,
-      time: newTime,
-      sched: selectedSchedule,
+    const completeForm = {
+      ...data,
+      sched: data.sched.toISOString(),
+      date: formattedDate,
+      time: formattedTime,
     };
 
-    setSchedule((prevSched) => [...prevSched, newSched]);
-    setOpen(false);
+    return completeForm;
   }
+
+  const showScheduleCreatedToaster = (undoCallback) => {
+    toast("Event has been created", {
+      description: "New schedule has successfully been added!",
+      action: {
+        label: "Undo",
+        onClick: () => undoCallback(),
+      },
+    });
+  };
+
+  const undoScheduleCreated = () => {
+    console.log("schedule deleted");
+  };
+
+  const onSubmit = async (data) => {
+    const formData = formatFormData(data);
+
+    try {
+      const response = await fetch("http://localhost:5000/api/schedule/", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error(`Request failed with status ${response.status}`);
+      }
+
+      const result = await response.json();
+
+      console.log("Submitted form:", result.data);
+    } catch (error) {
+      setError("root", {
+        message: "Failed to create schedule, please try again",
+      });
+    }
+    showScheduleCreatedToaster(undoScheduleCreated);
+
+    setOpen(false);
+    reset();
+  };
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
@@ -108,48 +130,64 @@ function AddSchedule() {
             Set the date, time, and details for your upcoming exam or event.
           </DialogDescription>
         </DialogHeader>
-        <form onSubmit={handleOnSubmit}>
+
+        <form onSubmit={handleSubmit(onSubmit)}>
           <div>
             <input
+              {...register("title")}
               type="text"
-              name="schedule-title"
-              className="outline-none border-0 border-b-2 w-full mb-2 text-2xl"
+              className="outline-none border-0 border-b-2 w-full text-2xl"
               placeholder="ADD TITLE"
-              required
-            ></input>
-            <label htmlFor="schedule-description">Schedule description</label>
+            />
+            {errors.title && (
+              <div className="text-red-400 text-sm pl-1">
+                {errors.title.message}
+              </div>
+            )}
+            <label className="mt-3 inline-block" htmlFor="schedule-description">
+              Schedule description
+            </label>
             <textarea
-              name="schedule-description"
+              {...register("schedule_description")}
               id="schedule-description"
+              type="text"
               className="outline-none border-2 w-full min-h-[150px] h-auto resize-none py-2 px-2"
               placeholder="Enter description here..."
             ></textarea>
           </div>
-          <div className="mb-4">
+
+          <div className="mb-4 mt-3">
             <label>
               Choose date and time:
-              <DateTimePicker
-                id="dateTimePicker"
-                selectedSchedule={selectedSchedule}
-                onChange={setSelectedSchedule}
+              <Controller
+                name="sched"
+                control={control}
+                defaultValue={null}
+                rules={{ required: "Date and time required" }}
+                render={({ field }) => {
+                  return (
+                    <DateTimePicker
+                      id="dateTimePicker"
+                      selectedSchedule={field.value}
+                      onChange={field.onChange}
+                    />
+                  );
+                }}
               />
+              {errors.sched && (
+                <div className="text-red-400 text-sm pl-1">
+                  {errors.sched.message}
+                </div>
+              )}
             </label>
           </div>
 
           <Button
             className="bg-black text-[white] hover:bg-slate-600 active:scale-95"
             type="submit"
-            onClick={() =>
-              toast("Event has been created", {
-                description: "New schedule has successfully been added! ",
-                action: {
-                  label: "Undo",
-                  onClick: () => deleteSchedule(generatedID),
-                },
-              })
-            }
+            disabled={isSubmitting}
           >
-            Submit
+            {isSubmitting ? "Loading..." : "Submit"}
           </Button>
         </form>
       </DialogContent>

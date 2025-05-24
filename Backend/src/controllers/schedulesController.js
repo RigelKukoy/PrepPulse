@@ -15,8 +15,23 @@ import handleResponse from "../utils/responseHandler.js";
 //@desc GET all schedules
 //@route GET /api/schedule
 export const getAllSchedules = async (req, res, next) => {
+  const sortBy = req.query.sortBy?.toLowerCase() || "sched";
+  const sortDir = req.query.sortDir?.toLowerCase() || "asc";
+  const deletedStatus = req.query.is_deleted?.toLowerCase();
+
+  const allowedFields = ["sched", "progress_percentage"];
+  const allowedDirs = ["asc", "desc"];
+
+  if (!allowedFields.includes(sortBy) || !allowedDirs.includes(sortDir)) {
+    return handleResponse(res, 404, "Invalid sort parameter/s");
+  }
+
   try {
-    const schedules = await getAllSchedulesService();
+    const schedules = await getAllSchedulesService(
+      sortBy,
+      sortDir,
+      deletedStatus
+    );
     handleResponse(
       res,
       201,

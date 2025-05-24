@@ -1,13 +1,13 @@
 import { createContext, useState } from "react";
-import { tasks, references } from "@/data";
 
 export const DashboardContext = createContext();
 
 export function DashboardProvider({ children }) {
   const [onSchedulePage, setOnSchedulePage] = useState(null);
   const [Schedule, setSchedule] = useState([]);
-  const [scheduleTasks, setScheduleTasks] = useState(tasks);
-  const [scheduleReferences, setScheduleReferences] = useState(references);
+  const [scheduleTasks, setScheduleTasks] = useState([]);
+  const [scheduleReferences, setScheduleReferences] = useState([]);
+  const [currentPage, setCurrentPage] = useState('dashboard')
 
   return (
     <DashboardContext.Provider
@@ -20,6 +20,8 @@ export function DashboardProvider({ children }) {
         setScheduleTasks,
         scheduleReferences,
         setScheduleReferences,
+        currentPage,
+        setCurrentPage
       }}
     >
       {children}

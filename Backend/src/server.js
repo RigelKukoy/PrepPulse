@@ -41,6 +41,7 @@ app.get("/", async (req, res) => {
 
 //Router
 app.use("/api", schedulesRoutes);
+
 //Error handler
 app.use(RouteNotFound);
 app.use(errorHandler);
